@@ -6,7 +6,7 @@ Source code for original application can be downloaded from https://www.unix-wis
 Why I ported it?
 
 I liked original app for its simplicity and old fashioned look and feel.
-Robert seems no longe maintaining that so I came up with my own Python based version.
+Robert seems no longer maintaining that so I came up with my own Python based version.
 
 Application supports both PostgreSQL and Sqlite database for storing data.
 Its built with Python Flask and can be easily started on Docker.

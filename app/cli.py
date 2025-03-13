@@ -82,9 +82,10 @@ def init_db_helper():
     # Create view if it doesn't exist
     try:
         res=VAbsence.query.first()
-    except SQLAlchemyError  as e:
-        click.echo("View doesn't exists creating it")
-
+    except Exception  as e:
+        click.echo("View likely do not exists creating it")
+        db.session.commit()
+        
         with open(view_sql, 'r') as file:
             view_script = file.read()
             view_statements = view_script.split(';')

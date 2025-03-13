@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 RUN apt-get update && apt-get dist-upgrade -y
-RUN apt-get install vim -y
+RUN apt-get install apt-utils -y
 RUN useradd absences
 WORKDIR /home/absences
 COPY app app
