@@ -9,7 +9,7 @@ I liked original app for its simplicity and old fashioned look and feel.
 Robert seems no longe maintaining that so I came up with my own version rewritten for python.
 
 Application supports both PostgreSQL and sqllite database for storing data.
-It build with Python Flask and can be easily started on Docker.
+Its built with Python Flask and can be easily started on Docker.
 
 Have fun!
 
