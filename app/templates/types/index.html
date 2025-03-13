@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Absence types{% endblock %}</h1>
+  {% if current_user.is_authenticated %}
+    <p><a class="action" href="{{ url_for('types.create') }}">New</a></p>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for type in absence_types %}
+        <tr>
+            <td>{{ type['id'] }}</td>
+            <td>{{ type['name'] }}</td>
+            <td style="background-color: {{ type['color'] }}">{{ type['color'] }}</td>
+            <td><a class="action" href=" {{ url_for('types.edit', id=type['id']) }} ">Edit</a></td>
+            <td><a class="action" href=" {{ url_for('types.delete', id=type['id']) }} ">Delete</a></td>
+        </tr>
+     {% endfor %}
+     </tbody>
+</table>
+{% endblock %}
+

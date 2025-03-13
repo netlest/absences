@@ -1,0 +1,35 @@
+{% from "_formhelpers.html" import render_field %}
+
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Absences{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('abs.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<h1>{{ 'Edit' if request.path.startswith('/absences/edit') else 'Create' }}</h1>
+    
+<form method=post action="{{ action_url }}">
+ <dl>
+    {{ form.hidden_tag() }}
+    {{ render_field(form.object_id) }}
+    {{ render_field(form.type_id) }}
+    {{ render_field(form.abs_date_start) }}
+    {{ render_field(form.abs_date_end) }}
+    {{ render_field(form.description) }}
+ </dl>
+ <p>{{ form.submit() }}</p>
+</form>
+
+
+{% if absence %}
+<a class="button" href=" {{ url_for('abs.delete', id=absence.id) }} ">Delete</a>
+{% endif %}
+
+{% endblock %}

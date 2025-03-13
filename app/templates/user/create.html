@@ -1,0 +1,31 @@
+{% from "_formhelpers.html" import render_field %}
+
+
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Users{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('user.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>{{ 'Edit' if request.path.startswith('/users/edit') else 'Create' }} User</h1>
+
+<form method=post action="{{ action_url }}">
+ <dl>
+    {{ form.hidden_tag() }}
+    {{ render_field(form.username) }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.confirm_password) }}
+    {{ render_field(form.groups) }}
+ </dl>
+ <p>{{ form.submit() }}</p>
+</form>
+
+
+{% endblock %}

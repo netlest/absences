@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>Manage</h1>
+{% endblock %}
+
+
+{% block content %}
+
+    <p>Connected to {{ dialect }} database.</p>
+
+    <p>Available URLs</p>
+    <dd>
+    <ul>
+     {% for url in static_urls %}
+       <li><a href="{{ url['loc'] }}">{{ url['loc'] }}</a></li>
+     {% endfor %}
+    </ul>
+    </dd>
+{% endblock %}
+

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for map in img_maps %}
+      {% for item in map %}
+      {{ item|safe }}
+      {% endfor %}
+    {% endfor %}
+
+    <p><img src="{{ url_for('month.legend') }}"/></p>
+
+    {% for day in dates %}
+      <p><img src="{{ url_for('month.month', month=day.month, year=day.year) }}" usemap="#{{day.month}}{{day.year}}"/></p>
+    {% endfor %}
+
+{% endblock %}

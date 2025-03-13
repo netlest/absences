@@ -1,0 +1,30 @@
+{% from "_formhelpers.html" import render_field %}
+
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Holidays{% endblock %}</h1>
+  {% if current_user.is_authenticated %}
+    <p><a class="action" href="{{ url_for('object.create') }}">New</a></p>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<h1>{{ 'Edit' if request.path.startswith('/holidays/edit') else 'Create' }} Holiday</h1>
+    
+<form method=post action="{{ action_url }}">
+ <dl>
+    {{ form.hidden_tag() }}
+    {{ render_field(form.country) }}
+    {{ render_field(form.event_date) }}
+    {{ render_field(form.description) }}
+    {{ render_field(form.recurring) }}
+ </dl>
+ <p>{{ form.submit() }}</p>
+</form>
+
+
+{% endblock %}

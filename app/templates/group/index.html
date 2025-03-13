@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Groups{% endblock %}</h1>
+  {% if current_user.is_authenticated %}
+    <p><a class="action" href="{{ url_for('group.create') }}">New</a></p>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Created by</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for group in groups %}
+        <tr>
+            <td>{{ group['id'] }}</td>
+            <td>{{ group['name'] }}</td>
+            <td>{{ group['owner'] }}</td>
+            <td>{{ group['description'] }}</td>
+            <td><a class="action" href=" {{ url_for('group.edit', id=group['id']) }} ">Edit</a></td>
+            <td><a class="action" href=" {{ url_for('group.delete', id=group['id']) }} ">Delete</a></td>
+        </tr>
+     {% endfor %}
+     </tbody>
+</table>
+{% endblock %}
+

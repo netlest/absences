@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Holidays{% endblock %}</h1>
+  {% if current_user.is_authenticated %}
+    <p><a class="action" href="{{ url_for('holiday.create') }}">New</a></p>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Country</th>
+            <th>Event date</th>
+            <th>Description</th>
+            <th>Recurring</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for holiday in holidays %}
+        <tr>
+            <td>{{ holiday.id }}</td>
+            <td>{{ holiday.country }}</td>
+            <td>{{ holiday.event_date }}</td>
+            <td>{{ holiday.description }}</td>
+            <td>{{ holiday.recurring }}</td>
+            <td><a class="action" href=" {{ url_for('holiday.edit', id=holiday['id']) }} ">Edit</a></td>
+            <td><a class="action" href=" {{ url_for('holiday.delete', id=holiday['id']) }} ">Delete</a></td>
+        </tr>
+     {% endfor %}
+     </tbody>
+</table>
+{% endblock %}
+

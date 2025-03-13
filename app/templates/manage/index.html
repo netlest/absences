@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Manage</h1>
+
+    <dd>
+    <ul>
+    
+       <li><a href="{{ url_for('object.index') }}">Objects</a></li>
+       <li><a href="{{ url_for('abs.index') }}">Absences</a></li>
+       {% if current_user.is_authenticated and current_user.admin  %}
+       <li><a href="{{ url_for('user.index') }}">Users</a></li>
+       <li><a href="{{ url_for('group.index') }}">Groups</a></li>
+       <li><a href="{{ url_for('holiday.index') }}">Public holidays</a></li>
+       <li><a href="{{ url_for('types.index') }}">Type of absences</a></li>
+       {% endif %}
+    </ul>
+    </dd>
+
+
+{% endblock %}

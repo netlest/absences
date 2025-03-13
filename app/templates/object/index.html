@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Objects{% endblock %}</h1>
+  {% if current_user.is_authenticated %}
+    <p><a class="action" href="{{ url_for('object.create') }}">New</a></p>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Object owner</th>
+            <th>Group</th>
+            <th>Object name</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for object in objects %}
+        <tr>
+            <td>{{ object['owner'] }}</td>
+            <td>{{ object['group_name'] }}</td>
+            <td>{{ object['object_name'] }}</td>
+            <td>{{ object['description'] }}</td>
+            {% if current_user.id == object['user_id'] or current_user.admin %}
+            <td><a class="action" href=" {{ url_for('object.edit', id=object['id']) }} ">Edit</a></td>
+            <td><a class="action" href=" {{ url_for('object.delete', id=object['id']) }} ">Delete</a></td>
+            {% else %}
+            <td></td>
+            <td></td>
+            {% endif %}
+        </tr>
+     {% endfor %}
+     </tbody>
+</table>
+{% endblock %}
+

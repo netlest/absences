@@ -1,0 +1,28 @@
+{% from "_formhelpers.html" import render_field %}
+
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Objects{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('types.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<h1>{{ 'Edit' if request.path.startswith('/types/edit') else 'Create' }} type of absence</h1>
+    
+<form method=post action="{{ action_url }}">
+ <dl>
+    {{ form.hidden_tag() }}
+    {{ render_field(form.name) }}
+    {{ render_field(form.color) }}
+ </dl>
+ <p>{{ form.submit() }}</p>
+</form>
+
+
+{% endblock %}

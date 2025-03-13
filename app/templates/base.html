@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %} - Absences</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var groupSelect = document.getElementById('group_id');
+        groupSelect.addEventListener('change', function() {
+            this.form.submit();
+        });
+
+        var chunkSelect = document.getElementById('chunksize');
+        chunkSelect.addEventListener('change', function() {
+            this.form.submit();
+        });
+    });
+</script>
+</head>
+
+<body>
+ 
+  <div class="container">
+
+
+    <div class="navbar">
+
+        <div class="left">
+          <form method="post" enctype="multipart/form-data" action="{{ url_for('main.submit') }}">
+               Show
+               {{ navform.hidden_tag() }}
+               {{ navform.chunksize }}
+               Months. Start with 
+               {{ navform.start_month }}
+               {{ navform.start_year }}
+               {{ navform.group_id }}
+               {{ navform.submit_btn }}
+           </form>
+           <form method="post" enctype="multipart/form-data" action="{{ url_for('main.navigation') }}">
+            {{ prevnextform.hidden_tag() }}
+            {{ prevnextform.prev() }}
+            {{ prevnextform.next() }}
+           </form>
+        </div>
+
+        <div class="right">
+            Welcome {{ current_user.username }} |
+            <a href="{{ url_for('main.index') }}">Home</a>
+            <a href="{{ url_for('manage.manage') }}">Manage</a>
+            <a href="{{ url_for('auth.logout') }}" title="Logout"><span class="material-icons md-18">logout</span></a>
+        </div>
+
+    </div>
+
+
+
+    <div class="content">
+      {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+      {% endfor %}
+
+      {% block header %}{% endblock %}
+      {% block content %}{% endblock %}
+    </div>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+services:
+  absences:
+    container_name: absences
+    image: absences:latest
+    environment:
+      # Use development FLASK_ENV if you want to setup sqlite database
+      # Ignore the DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_ADMIN_USER, DB_ADMIN_PASS in that case
+      # Define DB_ADMIN_USER and DB_ADMIN_PASS if you want to create database automatically
+      - FLASK_ENV=development  # development|production
+      - FLASK_APP=app
+      # Generate a new SECRET_KEY using the following command:
+      # python -c 'import os; print(os.urandom(25).hex())'
+      - SECRET_KEY=2712535ea53cb154157e5b22640edd00b01e8a4bf0e43d3de9 
+      - DB_HOST=postgres_host
+      - DB_NAME=postgres_db_name
+      - DB_USER=postgres_username
+      - DB_PASS=postgres_password
+      - DB_ADMIN_USER=postgres
+      - DB_ADMIN_PASS=admin_pass_here
+    ports:
+      - "8765:8000/tcp"
+    restart: always

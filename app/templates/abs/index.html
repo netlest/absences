@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Absences{% endblock %}</h1>
+  {% if current_user.is_authenticated %}
+    <p><a class="action" href="{{ url_for('abs.create') }}">New</a></p>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Object</th>
+            <th>Group</th>
+            <th>Type</th>
+            <th>Absence start</th>
+            <th>Absence end</th>
+            <th>Duration</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for absence in absences %}
+        <tr>
+            <td>{{ absence['object_name'] }}</td>
+            <td>{{ absence['group_name'] }}</td>
+            <td>{{ absence['at_name'] }}</td>
+            <td>{{ absence['abs_date_start'] }}</td>
+            <td>{{ absence['abs_date_end'] }}</td>
+            <td>{{ absence['duration'] }}</td>
+            <td>{{ absence['description'] }}</td>
+
+            {% if current_user.id == absence['user_id'] or current_user.admin or config['MODIFY_ALL_GROUP_ABSENCES'] %}
+            <td><a class="action" href=" {{ url_for('abs.edit', id=absence['id']) }} ">Edit</a></td>
+            <td><a class="action" href=" {{ url_for('abs.delete', id=absence['id']) }} ">Delete</a></td>
+            {% else %}
+            <td></td>
+            <td></td>
+            {% endif %}
+
+        </tr>
+     {% endfor %}
+     </tbody>
+</table>
+{% endblock %}
+
