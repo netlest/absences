@@ -1,6 +1,6 @@
 Absence web application developed to help keep track of people in a group. It is intended to do one thing: allow the user to display the plans of all people in a group in a way that makes it easy to see who's present and who's absent. It is not intended for anything else. 
 
-This is python port for old fashioned CGI application orginally developed by Robert Urban
+This is python port for old fashioned CGI application orginally developed by Robert Urban.
 Source code for original application can be downloaded from https://www.unix-wissen.de/absence/
 
 Why I ported it?
