@@ -6,6 +6,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from .database import get_db
 from .models import Absence, User, Object, AbsenceType
@@ -112,10 +113,8 @@ async def bulk_create_absences(
         )
         
     except HTTPException:
-        await db.rollback()
         raise
     except Exception as e:
-        await db.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to create absences: {str(e)}"
@@ -187,10 +186,8 @@ async def create_absence(
         return AbsenceResponse.model_validate(absence)
         
     except HTTPException:
-        await db.rollback()
         raise
     except Exception as e:
-        await db.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to create absence: {str(e)}"
@@ -221,19 +218,17 @@ async def list_absences(
     Returns:
         List[AbsenceDetailResponse]: List of absences with related data
     """
-    # Query with eager loading of relationships
+    # Query with eager loading of relationships to avoid N+1 queries
     result = await db.execute(
         select(Absence)
+        .options(selectinload(Absence.object), selectinload(Absence.absence_type))
         .offset(skip)
         .limit(limit)
     )
     absences = result.scalars().all()
     
-    # Load relationships for each absence
-    response_list = []
-    for absence in absences:
-        await db.refresh(absence, ["object", "absence_type"])
-        response_list.append(AbsenceDetailResponse.model_validate(absence))
+    # Convert to response schema (relationships are already loaded)
+    response_list = [AbsenceDetailResponse.model_validate(absence) for absence in absences]
     
     return response_list
 
@@ -263,8 +258,11 @@ async def get_absence(
     Raises:
         HTTPException: If absence not found
     """
+    # Query with eager loading of relationships
     result = await db.execute(
-        select(Absence).where(Absence.id == absence_id)
+        select(Absence)
+        .options(selectinload(Absence.object), selectinload(Absence.absence_type))
+        .where(Absence.id == absence_id)
     )
     absence = result.scalar_one_or_none()
     
@@ -273,9 +271,6 @@ async def get_absence(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Absence with id {absence_id} not found"
         )
-    
-    # Eager load relationships
-    await db.refresh(absence, ["object", "absence_type"])
     
     return AbsenceDetailResponse.model_validate(absence)
 

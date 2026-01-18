@@ -2,9 +2,9 @@
 SQLAlchemy ORM models using SQLAlchemy 2.0 mapped_column syntax.
 These models represent the database schema with type hints.
 """
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import List, Optional
-from sqlalchemy import ForeignKey, String, Boolean, Integer, Date, DateTime
+from sqlalchemy import ForeignKey, String, Boolean, Integer, Date, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .database import Base
 
@@ -17,8 +17,8 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     admin: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
 
     # Relationships
     objects: Mapped[List["Object"]] = relationship("Object", back_populates="user")
