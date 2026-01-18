@@ -29,5 +29,7 @@ echo "================================"
 echo ""
 
 # Start the server
-cd /home/runner/work/absences/absences
+# Get the script's directory and cd to repo root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 uvicorn fastapi_app.main:app --reload --host 0.0.0.0 --port 8000

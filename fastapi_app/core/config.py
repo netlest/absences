@@ -3,7 +3,7 @@ FastAPI Configuration
 Best practice: Use pydantic-settings for configuration management
 """
 import os
-from typing import Optional
+from typing import Optional, List
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     
     # API Key/Bearer tokens (for simplicity, using a static list - in production use DB)
     # Best practice: In production, store API keys in database with hashing
-    API_KEYS: list[str] = [
+    API_KEYS: List[str] = [
         "demo-api-key-12345",  # Example API key
         "test-bearer-token-67890"  # Another example
     ]
