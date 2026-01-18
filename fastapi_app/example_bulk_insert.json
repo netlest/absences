@@ -1,0 +1,39 @@
+{
+  "absences": [
+    {
+      "object_id": 1,
+      "type_id": 1,
+      "abs_date_start": "2024-01-01",
+      "abs_date_end": "2024-01-05",
+      "description": "New Year Vacation"
+    },
+    {
+      "object_id": 1,
+      "type_id": 2,
+      "abs_date_start": "2024-02-10",
+      "abs_date_end": "2024-02-12",
+      "description": "Sick Leave"
+    },
+    {
+      "object_id": 2,
+      "type_id": 1,
+      "abs_date_start": "2024-03-15",
+      "abs_date_end": "2024-03-22",
+      "description": "Spring Holiday"
+    },
+    {
+      "object_id": 2,
+      "type_id": 3,
+      "abs_date_start": "2024-04-01",
+      "abs_date_end": "2024-04-01",
+      "description": "Personal Day"
+    },
+    {
+      "object_id": 3,
+      "type_id": 1,
+      "abs_date_start": "2024-05-20",
+      "abs_date_end": "2024-05-31",
+      "description": "Summer Vacation"
+    }
+  ]
+}
