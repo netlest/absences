@@ -87,11 +87,12 @@ def create_app() -> FastAPI:
     )
     async def health_check():
         """Health check endpoint"""
+        from sqlalchemy import text
         db_status = "ok"
         try:
             # Test database connection
             db = next(get_db())
-            db.execute("SELECT 1")
+            db.execute(text("SELECT 1"))
             db.close()
         except Exception as e:
             db_status = f"error: {str(e)}"
